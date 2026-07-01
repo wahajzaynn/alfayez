@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al Fayez — الفايز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base: #FAF9F6;
+    --ink: #1C1A17;
+    --ink-soft: #55504A;
+    --gold: #B8935A;
+    --gold-deep: #8A6C3F;
+    --line: #E7E1D6;
+    --sand: #F1EBE0;
+    --white: #FFFFFF;
+    --radius: 2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--base);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .arabic{font-family:'Amiri', serif;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,249,246,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:1180px; margin:0 auto;
+  }
+  .brand{display:flex; flex-direction:column; line-height:1;}
+  .brand .en{
+    font-family:'Inter', sans-serif; font-weight:700; font-size:20px;
+    letter-spacing:3px; text-transform:uppercase;
+  }
+  .brand .ar{
+    font-family:'Amiri', serif; color:var(--gold-deep); font-size:14px; margin-top:2px; letter-spacing:1px;
+  }
+  nav{display:flex; gap:36px;}
+  nav a{
+    font-size:14px; font-weight:500; color:var(--ink-soft);
+    position:relative; padding-bottom:4px; transition:color .2s;
+  }
+  nav a:hover{color:var(--ink);}
+  nav a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--gold); transition:width .25s;
+  }
+  nav a:hover::after{width:100%;}
+  .header-icons{display:flex; align-items:center; gap:22px;}
+  .icon-btn{position:relative; display:flex; align-items:center; justify-content:center;}
+  .icon-btn svg{width:20px; height:20px; stroke:var(--ink); fill:none; stroke-width:1.5;}
+  .cart-count{
+    position:absolute; top:-8px; right:-9px;
+    background:var(--gold-deep); color:var(--white);
+    font-size:10px; font-weight:600; width:16px; height:16px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .mobile-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:100px 32px 90px;
+    display:flex; align-items:center; justify-content:space-between; gap:40px;
+    max-width:1180px; margin:0 auto;
+  }
+  .hero-watermark{
+    position:absolute; top:50%; right:-40px; transform:translateY(-50%);
+    font-family:'Amiri', serif; font-size:340px; color:var(--gold);
+    opacity:0.07; white-space:nowrap; pointer-events:none; z-index:0;
+    line-height:1;
+  }
+  .hero-content{position:relative; z-index:1; max-width:560px;}
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-deep);
+    font-weight:600; margin-bottom:22px;
+  }
+  .eyebrow .ar{font-family:'Amiri',serif; font-size:16px; letter-spacing:0; text-transform:none; color:var(--gold-deep);}
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--gold-deep);}
+  .hero h1{
+    font-family:'Amiri', serif; font-weight:700; font-size:56px; line-height:1.12;
+    margin-bottom:22px; color:var(--ink);
+  }
+  .hero p{
+    font-size:16px; color:var(--ink-soft); margin-bottom:34px; max-width:440px;
+  }
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--ink); color:var(--white);
+    padding:15px 30px; font-size:13px; font-weight:600;
+    letter-spacing:1.5px; text-transform:uppercase;
+    transition:background .25s;
+  }
+  .cta-btn:hover{background:var(--gold-deep);}
+  .cta-btn svg{width:14px; height:14px; stroke:var(--white); fill:none; stroke-width:2;}
+
+  .hero-visual{
+    position:relative; z-index:1; flex-shrink:0;
+    width:360px; height:360px;
+    display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+    gap:14px;
+  }
+  .hero-visual .cell{
+    background:var(--white); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .hero-visual .cell:nth-child(1){grid-column:1/3;}
+  .hero-visual svg.product-icon{width:70%; height:70%; stroke:var(--gold-deep); fill:none; stroke-width:1.2;}
+
+  /* ---------- Category strip ---------- */
+  .categories{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--white);
+  }
+  .cat-grid{
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(5,1fr);
+  }
+  .cat-card{
+    padding:36px 32px; display:flex; align-items:center; justify-content:space-between;
+    border-right:1px solid var(--line); cursor:pointer; transition:background .2s;
+  }
+  .cat-card:last-child{border-right:none;}
+  .cat-card:hover{background:var(--sand);}
+  .cat-text .en{font-size:15px; font-weight:600; letter-spacing:1px; text-transform:uppercase;}
+  .cat-text .ar{font-family:'Amiri', serif; color:var(--gold-deep); font-size:20px; margin-top:4px;}
+  .cat-card svg{width:26px; height:26px; stroke:var(--ink); fill:none; stroke-width:1.3;}
+
+  /* ---------- Products ---------- */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:70px 0 30px; flex-wrap:wrap; gap:20px;
+  }
+  .section-title{font-family:'Amiri', serif; font-size:32px; font-weight:700;}
+  .section-title .ar{color:var(--gold-deep); font-size:20px; margin-left:12px;}
+  .filters{display:flex; gap:10px; flex-wrap:wrap;}
+  .filter-btn{
+    padding:9px 18px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+    border:1px solid var(--line); color:var(--ink-soft); transition:all .2s;
+  }
+  .filter-btn.active, .filter-btn:hover{
+    background:var(--ink); color:var(--white); border-color:var(--ink);
+  }
+
+  .product-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:2px;
+    background:var(--line);
+    margin-bottom:90px;
+  }
+  .product-card{
+    background:var(--white); padding:0; display:flex; flex-direction:column;
+  }
+  .product-img{
+    aspect-ratio:1/1; background:var(--sand);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .product-img svg{width:46%; height:46%; stroke:var(--gold-deep); fill:none; stroke-width:1.2; transition:transform .35s;}
+  .product-card:hover .product-img svg{transform:scale(1.08);}
+  .product-tag{
+    position:absolute; top:14px; left:14px;
+    font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    background:var(--white); color:var(--gold-deep); padding:5px 10px;
+  }
+  .product-info{padding:22px 24px 26px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .product-name{font-size:15px; font-weight:600;}
+  .product-name-ar{font-family:'Amiri', serif; color:var(--ink-soft); font-size:13px;}
+  .product-bottom{
+    margin-top:auto; padding-top:16px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .product-price{font-family:'Poppins', sans-serif; font-weight:600; font-size:15px;}
+  .add-btn{
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    border:1px solid var(--ink); padding:9px 16px; transition:all .2s;
+  }
+  .add-btn:hover{background:var(--ink); color:var(--white);}
+  .add-btn.added{background:var(--gold-deep); border-color:var(--gold-deep); color:var(--white);}
+
+  /* ---------- Promo band ---------- */
+  .promo{
+    background:var(--ink); color:var(--white);
+    padding:70px 32px; text-align:center; position:relative; overflow:hidden;
+  }
+  .promo .ar-bg{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Amiri', serif; font-size:220px; color:var(--gold); opacity:0.06; pointer-events:none;
+  }
+  .promo h2{font-family:'Amiri', serif; font-size:30px; margin-bottom:14px; position:relative;}
+  .promo p{color:#C9C4BA; max-width:480px; margin:0 auto 30px; font-size:14px; position:relative;}
+  .promo .cta-btn{background:var(--gold); position:relative;}
+  .promo .cta-btn:hover{background:var(--gold-deep);}
+
+  /* ---------- Footer ---------- */
+  footer{padding:60px 32px 30px; background:var(--white); border-top:1px solid var(--line);}
+  .footer-grid{
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:2fr 1fr 1fr 1.4fr; gap:40px;
+  }
+  .footer-brand .en{font-weight:700; letter-spacing:2px; font-size:16px; text-transform:uppercase;}
+  .footer-brand .ar{font-family:'Amiri', serif; color:var(--gold-deep); font-size:14px; margin:4px 0 14px;}
+  .footer-brand p{font-size:13px; color:var(--ink-soft); max-width:260px;}
+  .footer-col h4{font-size:12px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; color:var(--ink);}
+  .footer-col a{display:block; font-size:13px; color:var(--ink-soft); margin-bottom:10px;}
+  .footer-col a:hover{color:var(--gold-deep);}
+  .newsletter-form{display:flex; border:1px solid var(--line); margin-top:6px;}
+  .newsletter-form input{
+    flex:1; border:none; background:none; padding:11px 12px; font-size:13px; font-family:inherit; outline:none;
+  }
+  .newsletter-form button{
+    background:var(--ink); color:var(--white); padding:0 16px; font-size:12px; font-weight:600;
+  }
+  .footer-bottom{
+    max-width:1180px; margin:50px auto 0; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); flex-wrap:wrap; gap:10px;
+  }
+
+  /* ---------- Cart drawer ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(28,26,23,0.4); z-index:90;
+    opacity:0; pointer-events:none; transition:opacity .3s;
+  }
+  .overlay.open{opacity:1; pointer-events:auto;}
+  .cart-drawer{
+    position:fixed; top:0; right:0; height:100%; width:400px; max-width:92vw;
+    background:var(--base); z-index:100; box-shadow:-8px 0 30px rgba(0,0,0,0.1);
+    transform:translateX(100%); transition:transform .35s ease; display:flex; flex-direction:column;
+  }
+  .cart-drawer.open{transform:translateX(0);}
+  .cart-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 26px; border-bottom:1px solid var(--line);
+  }
+  .cart-header h3{font-family:'Amiri', serif; font-size:20px;}
+  .cart-close svg{width:18px; height:18px; stroke:var(--ink); fill:none; stroke-width:1.5;}
+  .cart-items{flex:1; overflow-y:auto; padding:10px 26px;}
+  .cart-empty{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    height:100%; text-align:center; color:var(--ink-soft); gap:12px;
+  }
+  .cart-empty svg{width:40px; height:40px; stroke:var(--gold); fill:none; stroke-width:1.2;}
+  .cart-item{
+    display:flex; gap:14px; padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .cart-item-img{
+    width:64px; height:64px; background:var(--sand); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cart-item-img svg{width:60%; height:60%; stroke:var(--gold-deep); fill:none; stroke-width:1.2;}
+  .cart-item-info{flex:1; display:flex; flex-direction:column; justify-content:center; gap:6px;}
+  .cart-item-info .name{font-size:13px; font-weight:600;}
+  .cart-item-row{display:flex; align-items:center; justify-content:space-between;}
+  .qty-control{display:flex; align-items:center; gap:10px; border:1px solid var(--line); padding:4px 10px;}
+  .qty-control button{font-size:14px; font-weight:600; color:var(--ink-soft); line-height:1;}
+  .qty-control span{font-size:12px; font-weight:600; min-width:14px; text-align:center;}
+  .remove-btn{font-size:11px; color:var(--ink-soft); text-decoration:underline; text-underline-offset:2px;}
+  .cart-footer{padding:22px 26px 28px; border-top:1px solid var(--line);}
+  .cart-subtotal{display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:16px;}
+  .checkout-btn{
+    width:100%; background:var(--ink); color:var(--white); padding:15px; font-size:13px;
+    font-weight:600; letter-spacing:1.5px; text-transform:uppercase; transition:background .2s;
+  }
+  .checkout-btn:hover{background:var(--gold-deep);}
+  .demo-note{font-size:11px; color:var(--ink-soft); text-align:center; margin-top:12px;}
+
+  .toast{
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--white); padding:13px 24px; font-size:13px;
+    z-index:110; opacity:0; transition:all .3s; pointer-events:none;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:1024px){
+    nav{gap:18px;}
+    .cat-grid{grid-template-columns:repeat(3,1fr);}
+    .cat-card:nth-child(3){border-right:none;}
+  }
+  @media(max-width:860px){
+    nav{display:none;}
+    .hero{flex-direction:column; text-align:center; padding-top:70px;}
+    .hero-content{max-width:100%;}
+    .hero p{margin-left:auto; margin-right:auto;}
+    .hero h1{font-size:38px;}
+    .hero-watermark{font-size:180px; top:20px; transform:none; right:auto; left:50%; translate:-50% 0;}
+    .cat-grid{grid-template-columns:1fr 1fr;}
+    .cat-card{border-right:1px solid var(--line); border-bottom:1px solid var(--line);}
+    .cat-card:nth-child(even){border-right:none;}
+    .product-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr; gap:30px;}
+  }
+  @media(max-width:520px){
+    .wrap, .header-inner{padding-left:20px; padding-right:20px;}
+    .cat-grid{grid-template-columns:1fr;}
+    .cat-card{border-right:none !important;}
+    .product-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <span class="en">Al Fayez</span>
+      <span class="ar">الفايز</span>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#sandals-cat">Sandals</a>
+      <a href="#sunglasses-cat">Sunglasses</a>
+      <a href="#thobes-cat">Thobes</a>
+      <a href="#perfume-cat">Perfume</a>
+      <a href="#underwear-cat">Underwear</a>
+    </nav>
+    <div class="header-icons">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="icon-btn" id="cartToggle" aria-label="Open cart">
+        <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-watermark arabic">الفايز</div>
+  <div class="hero-content">
+    <div class="eyebrow"><span class="ar">أناقة عربية أصيلة</span></div>
+    <h1>Timeless Arabian<br>Elegance, Refined</h1>
+    <p>A curated collection of handcrafted sandals, statement sunglasses, and tailored thobes — designed for those who carry tradition forward.</p>
+    <a href="#collection" class="cta-btn">
+      Shop the Collection
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+  <div class="hero-visual">
+    <div class="cell">
+      <svg class="product-icon" viewBox="0 0 100 60"><path d="M10 45 Q50 55 90 45 L85 50 Q50 60 15 50 Z"/><path d="M20 45 C20 20 35 8 50 8 C65 8 80 20 80 45"/><line x1="50" y1="8" x2="50" y2="45"/></svg>
+    </div>
+    <div class="cell">
+      <svg class="product-icon" viewBox="0 0 100 100"><ellipse cx="28" cy="50" rx="20" ry="16"/><ellipse cx="72" cy="50" rx="20" ry="16"/><line x1="48" y1="48" x2="52" y2="48"/><line x1="8" y1="46" x2="2" y2="40"/><line x1="92" y1="46" x2="98" y2="40"/></svg>
+    </div>
+    <div class="cell">
+      <svg class="product-icon" viewBox="0 0 100 100"><path d="M35 8 L65 8 L70 20 L65 95 L35 95 L30 20 Z"/><line x1="50" y1="8" x2="50" y2="95"/><path d="M35 8 C35 8 25 20 25 35" /><path d="M65 8 C65 8 75 20 75 35"/></svg>
+    </div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="cat-grid">
+    <div class="cat-card" id="sandals-cat" onclick="filterCategory('sandals')">
+      <div class="cat-text">
+        <div class="en">Sandals</div>
+        <div class="ar arabic">سندل</div>
+      </div>
+      <svg viewBox="0 0 100 60"><path d="M10 45 Q50 55 90 45 L85 50 Q50 60 15 50 Z"/><path d="M20 45 C20 20 35 8 50 8 C65 8 80 20 80 45"/></svg>
+    </div>
+    <div class="cat-card" id="sunglasses-cat" onclick="filterCategory('sunglasses')">
+      <div class="cat-text">
+        <div class="en">Sunglasses</div>
+        <div class="ar arabic">نظارات</div>
+      </div>
+      <svg viewBox="0 0 100 100"><ellipse cx="28" cy="50" rx="20" ry="16"/><ellipse cx="72" cy="50" rx="20" ry="16"/><line x1="48" y1="48" x2="52" y2="48"/></svg>
+    </div>
+    <div class="cat-card" id="thobes-cat" onclick="filterCategory('thobes')">
+      <div class="cat-text">
+        <div class="en">Thobes</div>
+        <div class="ar arabic">ثوب</div>
+      </div>
+      <svg viewBox="0 0 100 100"><path d="M35 8 L65 8 L70 20 L65 95 L35 95 L30 20 Z"/><line x1="50" y1="8" x2="50" y2="95"/></svg>
+    </div>
+    <div class="cat-card" id="perfume-cat" onclick="filterCategory('perfume')">
+      <div class="cat-text">
+        <div class="en">Perfume</div>
+        <div class="ar arabic">عطور</div>
+      </div>
+      <svg viewBox="0 0 100 100"><rect x="34" y="30" width="32" height="55" rx="3"/><path d="M42 30 L42 16 Q42 10 50 10 Q58 10 58 16 L58 30"/><rect x="45" y="4" width="10" height="8"/></svg>
+    </div>
+    <div class="cat-card" id="underwear-cat" onclick="filterCategory('underwear')">
+      <div class="cat-text">
+        <div class="en">Underwear</div>
+        <div class="ar arabic">ملابس داخلية</div>
+      </div>
+      <svg viewBox="0 0 100 70"><path d="M10 10 L90 10 L90 30 Q90 55 50 62 Q10 55 10 30 Z"/><path d="M10 10 Q50 22 90 10"/></svg>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" id="collection">
+  <div class="section-head">
+    <div class="section-title">Our Collection<span class="ar arabic">مجموعتنا</span></div>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="sandals">Sandals</button>
+      <button class="filter-btn" data-filter="sunglasses">Sunglasses</button>
+      <button class="filter-btn" data-filter="thobes">Thobes</button>
+      <button class="filter-btn" data-filter="perfume">Perfume</button>
+      <button class="filter-btn" data-filter="underwear">Underwear</button>
+    </div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<section class="promo">
+  <div class="ar-bg arabic">فايز</div>
+  <h2>Free shipping across the UAE</h2>
+  <p>On all orders over 300 AED. Handcrafted pieces delivered with care, wherever you are.</p>
+  <a href="#collection" class="cta-btn">Continue Shopping</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="en">Al Fayez</div>
+      <div class="ar">الفايز</div>
+      <p>Handcrafted sandals, sunglasses, and thobes rooted in Arabian tradition, made for modern life. This is a demo storefront.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="#sandals-cat">Sandals</a>
+      <a href="#sunglasses-cat">Sunglasses</a>
+      <a href="#thobes-cat">Thobes</a>
+      <a href="#perfume-cat">Perfume</a>
+      <a href="#underwear-cat">Underwear</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Store Locations</a>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p style="font-size:13px; color:var(--ink-soft); margin-bottom:0;">Get news on new arrivals and offers.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Your email">
+        <button onclick="alert('Thanks for subscribing! (demo)')">Join</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Al Fayez. Demo storefront for preview purposes.</span>
+    <span>Dubai, UAE</span>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart <span class="arabic" style="color:var(--gold-deep); font-size:15px;">سلة التسوق</span></h3>
+    <button class="cart-close" id="cartClose"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">0 AED</span></div>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    <p class="demo-note">Demo store — no real payment will be processed.</p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------- Product data ----------
+const icons = {
+  sandal: '<svg class="product-icon" viewBox="0 0 100 60"><path d="M10 45 Q50 55 90 45 L85 50 Q50 60 15 50 Z"/><path d="M20 45 C20 20 35 8 50 8 C65 8 80 20 80 45"/><line x1="50" y1="8" x2="50" y2="45"/></svg>',
+  sunglasses: '<svg class="product-icon" viewBox="0 0 100 100"><ellipse cx="28" cy="50" rx="20" ry="16"/><ellipse cx="72" cy="50" rx="20" ry="16"/><line x1="48" y1="48" x2="52" y2="48"/><line x1="8" y1="46" x2="2" y2="40"/><line x1="92" y1="46" x2="98" y2="40"/></svg>',
+  thobe: '<svg class="product-icon" viewBox="0 0 100 100"><path d="M35 8 L65 8 L70 20 L65 95 L35 95 L30 20 Z"/><line x1="50" y1="8" x2="50" y2="95"/><path d="M35 8 C35 8 25 20 25 35" /><path d="M65 8 C65 8 75 20 75 35"/></svg>',
+  perfume: '<svg class="product-icon" viewBox="0 0 100 100"><rect x="34" y="30" width="32" height="55" rx="3"/><path d="M42 30 L42 16 Q42 10 50 10 Q58 10 58 16 L58 30"/><rect x="45" y="4" width="10" height="8"/><line x1="34" y1="48" x2="66" y2="48"/></svg>',
+  underwear: '<svg class="product-icon" viewBox="0 0 100 70"><path d="M10 10 L90 10 L90 30 Q90 55 50 62 Q10 55 10 30 Z"/><path d="M10 10 Q50 22 90 10"/></svg>'
+};
+
+const products = [
+  {id:1, cat:'sandals', name:'Desert Woven Sandal', nameAr:'سندل صحراوي', price:189, tag:'New', icon:'sandal'},
+  {id:2, cat:'sandals', name:'Nizwa Leather Slide', nameAr:'سندل نزوى الجلدي', price:249, tag:null, icon:'sandal'},
+  {id:3, cat:'sandals', name:'Palm Strap Sandal', nameAr:'سندل شريط النخيل', price:159, tag:null, icon:'sandal'},
+  {id:4, cat:'sandals', name:'Al Ain Suede Sandal', nameAr:'سندل العين', price:219, tag:'Best Seller', icon:'sandal'},
+  {id:5, cat:'sunglasses', name:'Oasis Round Frame', nameAr:'نظارة الواحة', price:329, tag:'New', icon:'sunglasses'},
+  {id:6, cat:'sunglasses', name:'Falcon Aviator', nameAr:'نظارة الصقر', price:379, tag:null, icon:'sunglasses'},
+  {id:7, cat:'sunglasses', name:'Marbella Gold Rim', nameAr:'نظارة مربلة الذهبية', price:299, tag:null, icon:'sunglasses'},
+  {id:8, cat:'sunglasses', name:'Dune Shield Sunglass', nameAr:'نظارة الكثبان', price:349, tag:'Best Seller', icon:'sunglasses'},
+  {id:9, cat:'thobes', name:'Classic White Thobe', nameAr:'ثوب أبيض كلاسيكي', price:449, tag:'Best Seller', icon:'thobe'},
+  {id:10, cat:'thobes', name:'Emirati Formal Thobe', nameAr:'ثوب إماراتي رسمي', price:549, tag:'New', icon:'thobe'},
+  {id:11, cat:'thobes', name:'Linen Summer Thobe', nameAr:'ثوب كتان صيفي', price:399, tag:null, icon:'thobe'},
+  {id:12, cat:'thobes', name:'Embroidered Collar Thobe', nameAr:'ثوب بياقة مطرزة', price:599, tag:null, icon:'thobe'},
+  {id:13, cat:'perfume', name:'Oud Al Fayez', nameAr:'عود الفايز', price:259, tag:'Best Seller', icon:'perfume'},
+  {id:14, cat:'perfume', name:'Amber Musk Attar', nameAr:'عطر العنبر والمسك', price:189, tag:'New', icon:'perfume'},
+  {id:15, cat:'perfume', name:'Rose of Taif', nameAr:'عطر ورد الطائف', price:225, tag:null, icon:'perfume'},
+  {id:16, cat:'perfume', name:'Bakhoor Royale', nameAr:'بخور رويال', price:145, tag:null, icon:'perfume'},
+  {id:17, cat:'underwear', name:'Everyday Cotton Set', nameAr:'طقم قطني يومي', price:79, tag:null, icon:'underwear'},
+  {id:18, cat:'underwear', name:'Modal Comfort Boxer', nameAr:'بوكسر مودال مريح', price:89, tag:'New', icon:'underwear'},
+  {id:19, cat:'underwear', name:'Classic Brief Pack (3)', nameAr:'عبوة سراويل كلاسيك', price:99, tag:'Best Seller', icon:'underwear'},
+  {id:20, cat:'underwear', name:'Bamboo Fiber Undershirt', nameAr:'قميص داخلي من الخيزران', price:69, tag:null, icon:'underwear'},
+];
+
+let cart = [];
+let currentFilter = 'all';
+
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  const filtered = currentFilter === 'all' ? products : products.filter(p => p.cat === currentFilter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <div class="product-img">
+        ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
+        ${icons[p.icon]}
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-name-ar arabic">${p.nameAr}</div>
+        <div class="product-bottom">
+          <span class="product-price">${p.price} AED</span>
+          <button class="add-btn" onclick="addToCart(${p.id}, this)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCategory(cat){
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === cat));
+  renderProducts();
+  document.getElementById('collection').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if(!btn) return;
+  currentFilter = btn.dataset.filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+});
+
+function addToCart(id, btnEl){
+  const product = products.find(p => p.id === id);
+  const existing = cart.find(c => c.id === id);
+  if(existing){ existing.qty += 1; } else { cart.push({...product, qty:1}); }
+  renderCart();
+  showToast(`${product.name} added to cart`);
+  if(btnEl){
+    btnEl.classList.add('added');
+    btnEl.textContent = 'Added';
+    setTimeout(() => { btnEl.classList.remove('added'); btnEl.textContent = 'Add to Cart'; }, 1200);
+  }
+}
+
+function changeQty(id, delta){
+  const item = cart.find(c => c.id === id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  renderCart();
+}
+
+function removeItem(id){
+  cart = cart.filter(c => c.id !== id);
+  renderCart();
+}
+
+function renderCart(){
+  const itemsEl = document.getElementById('cartItems');
+  const countEl = document.getElementById('cartCount');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  const totalQty = cart.reduce((s,c) => s + c.qty, 0);
+  countEl.textContent = totalQty;
+
+  if(cart.length === 0){
+    itemsEl.innerHTML = `
+      <div class="cart-empty">
+        <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>
+        <p>Your cart is empty.<br>Discover our collection.</p>
+      </div>`;
+  } else {
+    itemsEl.innerHTML = cart.map(c => `
+      <div class="cart-item">
+        <div class="cart-item-img">${icons[c.icon]}</div>
+        <div class="cart-item-info">
+          <span class="name">${c.name}</span>
+          <div class="cart-item-row">
+            <div class="qty-control">
+              <button onclick="changeQty(${c.id}, -1)">−</button>
+              <span>${c.qty}</span>
+              <button onclick="changeQty(${c.id}, 1)">+</button>
+            </div>
+            <span class="product-price">${c.price * c.qty} AED</span>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${c.id})">Remove</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  const subtotal = cart.reduce((s,c) => s + c.price * c.qty, 0);
+  subtotalEl.textContent = `${subtotal} AED`;
+}
+
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+function checkout(){
+  if(cart.length === 0){ showToast('Your cart is empty'); return; }
+  showToast('This is a demo — checkout is not connected to payment.');
+}
+
+// Cart drawer toggle
+const drawer = document.getElementById('cartDrawer');
+const overlay = document.getElementById('overlay');
+document.getElementById('cartToggle').addEventListener('click', () => {
+  drawer.classList.add('open'); overlay.classList.add('open');
+});
+document.getElementById('cartClose').addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+function closeDrawer(){
+  drawer.classList.remove('open'); overlay.classList.remove('open');
+}
+
+renderProducts();
+renderCart();
+</script>
+
+</body>
+</html>
